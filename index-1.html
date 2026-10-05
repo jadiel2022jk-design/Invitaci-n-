@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Busca tu nombre y abre tu invitación de cumpleaños. Viernes 8 de enero, 5:00 pm.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="¡Estás invitado!">
+<meta property="og:description" content="Busca tu nombre y abre tu invitación de cumpleaños. Viernes 8 de enero, 5:00 pm.">
+<meta property="og:image" content="https://jadiel2022jk-design.github.io/Invitaci-n-/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://jadiel2022jk-design.github.io/Invitaci-n-/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jadiel2022jk-design.github.io/Invitaci-n-/portada.png">
+<title>Busca tu invitación de cumpleaños</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#00808a;--bg2:#17b3aa;--ink:#fff;--sun:#ffd23f;--pink:#f2553f;--card:#fff;--card-ink:#1b1f4a;--muted:#5b6090;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#00616b;--bg2:#0a8d8f}}
+:root[data-theme="dark"]{--bg:#00616b;--bg2:#0a8d8f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{-webkit-text-size-adjust:100%;text-size-adjust:100%;margin:0;background:var(--bg);background:linear-gradient(180deg,var(--bg2) 0,var(--bg) 70%);color:var(--ink);font-family:"Nunito",system-ui,sans-serif;min-height:100vh}
+main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:40px 20px 56px}
+h1{font-family:"Bagel Fat One","Arial Rounded MT Bold",system-ui,sans-serif;font-weight:400;font-size:clamp(2.4rem,9vw,3.8rem);line-height:1.02;margin:0 0 12px;color:var(--sun);transform:rotate(-1.5deg)}
+.lead{font-size:1.1rem;margin:0 0 28px;max-width:44ch}
+.search{display:flex}
+.search input{margin-right:10px}
+input{-webkit-appearance:none;appearance:none;flex:1;min-width:0;font:inherit;font-size:1.15rem;font-weight:700;padding:16px 18px;border:3px solid var(--sun);border-radius:16px;background:#fff;color:var(--card-ink)}
+input::placeholder{color:#8a8fb8;font-weight:400}
+input:focus-visible,button:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+button{-webkit-appearance:none;appearance:none;touch-action:manipulation;font:inherit;font-weight:800;padding:0 22px;border:0;border-radius:16px;background:var(--pink);color:#fff;cursor:pointer}
+#out{margin-top:28px;display:grid;gap:14px}
+.msg{background:rgba(255,255,255,.14);border-radius:16px;padding:16px 18px}
+.res{display:block;width:100%;text-align:left;background:var(--card);color:var(--card-ink);border-radius:20px;padding:18px 20px;box-shadow:6px 6px 0 var(--pink)}
+.res b{display:block;font-family:"Bagel Fat One",system-ui,sans-serif;font-weight:400;font-size:1.6rem;color:var(--bg);line-height:1.1}
+.res span{display:block;margin-top:6px;font-weight:700;color:var(--muted)}
+
+/* Invitación en pantalla completa */
+#story{overflow:hidden;position:fixed;top:0;right:0;bottom:0;left:0;z-index:10;display:none;color:#fff;background:#00808a;transition:background-color .9s ease;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#story.on{display:block}
+#stage{position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;display:grid;place-items:center;padding:calc(env(safe-area-inset-top,0px) + 70px) 28px calc(env(safe-area-inset-bottom,0px) + 90px)}
+.scene{grid-area:1/1;text-align:center;max-width:560px;opacity:0;transform:translateY(14px) scale(.98);transition:opacity .8s ease,transform .8s ease}
+.scene.in{opacity:1;transform:none}
+.scene.out{opacity:0;transform:translateY(-14px) scale(1.02)}
+.scene .small{font-size:clamp(1.1rem,4.5vw,1.5rem);font-weight:800;margin:0 0 14px;opacity:.9}
+.scene .big{font-family:"Bagel Fat One","Arial Rounded MT Bold",system-ui,sans-serif;font-weight:400;font-size:clamp(2.4rem,11vw,4.6rem);line-height:1.05;margin:0;overflow-wrap:anywhere}
+.scene .acts{display:flex;justify-content:center;margin-top:24px;flex-wrap:wrap}
+.scene .acts button{margin:6px;padding:14px 22px;background:#fff;color:#14825a}
+#close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 14px);left:14px;width:44px;height:44px;padding:0;border-radius:50%;background:rgba(255,255,255,.2);font-size:1.4rem;line-height:1;z-index:2}
+#dots{z-index:2;position:absolute;top:calc(env(safe-area-inset-top,0px) + 30px);left:70px;right:20px;display:flex}
+#dots i+i{margin-left:6px}
+#dots i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.3);transition:background .5s}
+#dots i.d{background:#fff}
+#hint{z-index:2;position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);left:0;right:0;text-align:center;font-weight:800;opacity:.85;animation:pulse 1.8s ease-in-out infinite}
+.scene .txt{font-size:clamp(1.15rem,4.8vw,1.5rem);font-weight:800;margin:18px 0 0}
+.scene .big+.txt{margin-top:14px}
+.rows{display:grid;gap:22px}
+.rows small{display:block;font-weight:800;opacity:.85;font-size:1.1rem;margin-bottom:2px}
+.rows b{font-family:"Bagel Fat One","Arial Rounded MT Bold",system-ui,sans-serif;font-weight:400;font-size:clamp(1.9rem,8.5vw,3rem);line-height:1.05;display:block}
+.sw{display:flex;justify-content:center;flex-wrap:wrap;margin:6px 0 10px}
+.sw div{text-align:center;font-weight:800;margin:0 7px 10px}
+.sw i{display:block;width:60px;height:60px;border-radius:50%;border:4px solid #fff;margin:0 auto 6px}
+.scene.fin .big{font-size:clamp(2rem,9vw,3rem);margin-top:26px}
+.fx{position:fixed;top:0;right:0;bottom:0;left:0;overflow:hidden;pointer-events:none;z-index:0}
+#story .fx{position:absolute}
+.fx span{position:absolute;bottom:-70px;opacity:0;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;-webkit-animation:subir linear infinite;animation:subir linear infinite}
+@-webkit-keyframes subir{0%{-webkit-transform:translateY(0) rotate(0);opacity:0}10%{opacity:.55}90%{opacity:.55}100%{-webkit-transform:translateY(-125vh) rotate(var(--rot));opacity:0}}
+@keyframes subir{0%{transform:translate3d(0,0,0) rotate(0);opacity:0}10%{opacity:.55}90%{opacity:.55}100%{transform:translate3d(var(--dx),-125vh,0) rotate(var(--rot));opacity:0}}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.scene,#story{transition-duration:.01s}#hint{animation:none}.fx{display:none}}
+</style>
+</head>
+<body>
+<div id="fx" class="fx" aria-hidden="true"></div>
+<main>
+  <h1>¡Estás invitado!</h1>
+  <p class="lead">Escribe la primera letra de tu nombre y abre tu invitación de cumpleaños.</p>
+  <div class="search" role="search">
+    <input id="q" type="search" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="off">
+    <button id="go" type="button">Buscar</button>
+  </div>
+  <div id="out" aria-live="polite"></div>
+</main>
+
+<div id="story" role="dialog" aria-modal="true" aria-label="Tu invitación">
+  <div class="fx" aria-hidden="true"></div>
+  <button id="close" type="button" aria-label="Cerrar invitación">×</button>
+  <div id="dots"></div>
+  <div id="stage"></div>
+  <div id="hint">Toca la pantalla para continuar</div>
+</div>
+
+<script>
+// ✏️ Edita esta lista para agregar o cambiar invitaciones.
+const EVENTO = {dia:"Viernes 8 de enero", hora:"5:00 pm", lugar:"Villa Jamar 3",
+  colores:[["Azul","#2f6bff"],["Rojo","#e5262f"],["Rosado","#ff8fc7"],["Amarillo","#ffd23f"]],
+  aviso:"Cada quien lleva sus bebidas alcohólicas."};
+const INVITACIONES = [
+  {invitado:"Papi"},
+  {invitado:"Fanny"},
+  {invitado:"La cacata"},
+  {invitado:"Tata"},
+  {invitado:"Nino"},
+  {invitado:"Nicole"},
+  {invitado:"Mami"},
+  {invitado:"Riukany"},
+  {invitado:"Jose"},
+  {invitado:"Yeury"},
+  {invitado:"Keira"},
+  {invitado:"Kendel"},
+  {invitado:"Marco"},
+  {invitado:"Leidy"},
+  {invitado:"Ricardo"},
+  {invitado:"Ricandry"},
+  {invitado:"Ananyela"},
+  {invitado:"Yudelka"},
+  {invitado:"Las mellas"},
+  {invitado:"Celenny"},
+  {invitado:"Kendry"},
+  {invitado:"Manuel"},
+  {invitado:"Enmanuel"},
+  {invitado:"Carolina"},
+  {invitado:"Rosanna"},
+  {invitado:"Amgel"},
+  {invitado:"Angel"},
+  {invitado:"Ariel"},
+  {invitado:"Leonela"},
+  {invitado:"Yasleydi"},
+  {invitado:"Pedro"},
+  {invitado:"Elianny"},
+  {invitado:"Anyi"},
+  {invitado:"Yurielis"},
+  {invitado:"Yumailin"},
+  {invitado:"Nicol"},
+  {invitado:"Berlín"},
+  {invitado:"Yon"},
+  {invitado:"Lance"},
+  {invitado:"Rayniel"},
+  {invitado:"Angel López"}
+];
+const COLORES=["#00808a","#e2553a","#14825a"];
+const norm=s=>(s.normalize?s.normalize("NFD"):s).replace(/[\u0300-\u036f]/g,"").toLowerCase().trim();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const out=document.getElementById("out"), q=document.getElementById("q");
+const story=document.getElementById("story"), stage=document.getElementById("stage"), dots=document.getElementById("dots"), hint=document.getElementById("hint");
+let pasos=[], n=0, busy=false, abierta=null;
+
+function makeFx(box){
+  const E=["🍹","🌴","🥥","🍍","🌺","🍸","🥭","🍉","🐚","🥂","🍋","🌴"];
+  for(let k=0;k<18;k++){
+    const e=document.createElement("span"), R=Math.random;
+    e.textContent=E[k%E.length];
+    e.style.left=(R()*94)+"%";
+    e.style.fontSize=(26+R()*28)+"px";
+    const dur=10+R()*10;
+    e.style.animationDuration=dur+"s";
+    e.style.webkitAnimationDuration=dur+"s";
+    e.style.animationDelay=(-R()*dur)+"s";
+    e.style.webkitAnimationDelay=(-R()*dur)+"s";
+    e.style.setProperty("--dx",(R()*120-60)+"px");
+    e.style.setProperty("--rot",(R()*80-40)+"deg");
+    box.appendChild(e);
+  }
+}
+makeFx(document.getElementById("fx"));
+makeFx(story.querySelector(".fx"));
+function buscar(){
+  const t=norm(q.value);
+  if(!t){out.innerHTML="";return}
+  const r=INVITACIONES.map((x,i)=>[x,i]).filter(([x])=>norm(x.invitado).indexOf(t)===0);
+  out.innerHTML=r.length?r.map(([x,i])=>`<button class="res" type="button" data-i="${i}"><b>${esc(x.invitado)}</b><span>Toca para abrir tu invitación</span></button>`).join(""):`<div class="msg">No encontramos esa invitación. Revisa cómo escribiste tu nombre o pregunta a quien te invitó.</div>`;
+}
+document.getElementById("go").addEventListener("click",buscar);
+q.addEventListener("input",buscar);
+q.addEventListener("keydown",e=>{if(e.key==="Enter")buscar()});
+out.addEventListener("click",e=>{const b=e.target.closest(".res");if(b)abrir(+b.dataset.i,b)});
+
+function abrir(i,origen){
+  const x=INVITACIONES[i]; abierta=origen;
+  const E=EVENTO;
+  pasos=[
+    {s:"Hola",b:x.invitado,t:"Estás invitado a un cumpleaños"},
+    {s:"Cuándo y dónde",rows:[["Día",E.dia],["Hora",E.hora],["Lugar",E.lugar]]},
+    {s:"Ven vestido de",sw:E.colores,t:E.aviso,b:"🍹 ¡Te esperamos! 🥂",fin:true}
+  ];
+  n=0; stage.innerHTML=""; busy=false;
+  dots.innerHTML=pasos.map(()=>"<i></i>").join("");
+  hint.style.display="";
+  story.classList.add("on"); document.body.style.overflow="hidden";
+  mostrar(0);
+}
+function escena(p){
+  const d=document.createElement("div"); d.className="scene"+(p.fin?" fin":"");
+  let h="";
+  if(p.s)h+=`<p class="small">${esc(p.s)}</p>`;
+  if(p.rows)h+=`<div class="rows">${p.rows.map(r=>`<div><small>${esc(r[0])}</small><b>${esc(r[1])}</b></div>`).join("")}</div>`;
+  if(p.sw)h+=`<div class="sw">${p.sw.map(c=>`<div><i style="background:${c[1]}"></i><span>${esc(c[0])}</span></div>`).join("")}</div>`;
+  if(p.t)h+=`<p class="txt">${esc(p.t)}</p>`;
+  if(p.b)h+=`<p class="big">${esc(p.b)}</p>`;
+  if(p.fin)h+=`<div class="acts"><button type="button" data-a="again">Verla otra vez</button><button type="button" data-a="close">Cerrar</button></div>`;
+  d.innerHTML=h; return d;
+}
+function mostrar(k){
+  story.style.backgroundColor=COLORES[k%COLORES.length];
+  [...dots.children].forEach((d,j)=>d.classList.toggle("d",j<=k));
+  hint.style.display=pasos[k].fin?"none":"";
+  const nueva=escena(pasos[k]); stage.appendChild(nueva);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>nueva.classList.add("in")));
+}
+function avanzar(){
+  if(busy||n>=pasos.length-1)return;
+  busy=true;
+  const vieja=stage.lastElementChild;
+  vieja.classList.remove("in"); vieja.classList.add("out");
+  n++; mostrar(n);
+  setTimeout(()=>{vieja.remove();busy=false},850);
+}
+function cerrar(){
+  story.classList.remove("on"); document.body.style.overflow="";
+  if(abierta)abierta.focus();
+}
+story.addEventListener("click",e=>{
+  const a=e.target.closest("[data-a]");
+  if(a){ if(a.dataset.a==="close")cerrar(); else {stage.innerHTML="";n=0;busy=false;mostrar(0);} return; }
+  if(e.target.closest("#close")){cerrar();return}
+  avanzar();
+});
+document.addEventListener("keydown",e=>{
+  if(!story.classList.contains("on"))return;
+  if(e.key==="Escape")cerrar();
+  else if(e.key===" "||e.key==="ArrowRight"||e.key==="Enter"){ if(!e.target.closest("button")){e.preventDefault();avanzar();} }
+});
+</script>
+</body>
+</html>
